@@ -1,22 +1,44 @@
 <?php
 session_start();
 
-include 'lib/models/UserModel.php';
+require 'lib/models/UserModel.php';
 
 //Cookie para la última hora de conexión
 $fecha = date("d/m/Y | H:i:s");
+setcookie("fecha", $fecha, time() + 31536000);
 
 //Objeto de la clase User
 $user = new UserModel();
 
-setcookie("fecha", $fecha, time() + 31536000);
-?>
+if (isset($_POST['inicio'])) {
+    $usuario = $user->accesoInformacion();
+    $users = $user->inicioSesion($_POST['username'], $_POST['password']);
+    //Comprobar si existe la cookie
+    if (isset($_COOKIE["fecha"])) {
+        echo "<p style='color:white'>Tú última visita fue el " . $_COOKIE["fecha"] . "</p>";
+    }
+}
 
+//Comprobar el rol de cada usuario
+if (isset($users['rol'])) {
+    switch ($users['rol']) {
+        case 0:
+            header("Location: lib/pages/Info.php");
+            break;
+        case 1:
+            header("Location: lib/pages/Admin.php");
+            break;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="lib/css/style.css"/>
     </head>
     <body>
         <div class="background"></div>
@@ -35,55 +57,26 @@ setcookie("fecha", $fecha, time() + 31536000);
             </div>
             <div class="login-section">
                 <div class="form-box">
-                    <form action="" method="post">
+                    <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
                         <h2 class="form-box__title">Iniciar Sesión</h2>
                         <div class="input-box">
-                            <span class="icon"></span>
                             <label>Usuario</label>
                             <input id="nombre" name="username" type="text" required>
                         </div>
                         <div class="input-box">
-                            <span class="icon"></span>
-                            <input id="clave" name="password" type="password" required>
                             <label>Contraseña</label>
+                            <input id="clave" name="password" type="password" required>
                         </div>
                         <button class="btn" type="submit" name="inicio">Iniciar</button>
-                        <br>
-                        <?php
-                        if (isset($_POST['inicio'])) {
-                            $usuario = $user->accesoInformacion();
-                            $users = $user->inicioSesion($_POST['username'], $_POST['password']);
-                        }
-                        ?>
                     </form>
                 </div>
             </div>
         </div>
     </body>
 </html>
-
 <?php
-//Comprobar el rol de cada usuario
-if (isset($users['rol'])) {
-    switch ($users['rol']) {
-        case 0:
-            header("Location: lib/pages/Info.php");
-            break;
-        case 1:
-            header("Location: lib/pages/Admin.php");
-            break;
-    }
-}
-
 //Obtener el nombre del usuario logueado
-/* if (isset($_POST['username'])) {
-  $users = $user->getUsuario($_POST['username']);
-  } */
-
-echo "</br>";
-
-//Comprobar si existe la cookie
-if (isset($_COOKIE["fecha"])) {
-    echo "<p style='color:white'>Tú última visita fue el " . $_COOKIE["fecha"] . "</p>";
+if (isset($_POST['username'])) {
+    $use = $user->getUser($_POST['username']);
 }
 ?>

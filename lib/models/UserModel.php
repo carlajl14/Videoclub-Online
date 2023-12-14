@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Videoclub/lib/DB/db.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/Videoclub-Online/lib/DB/db.php';
 
 class UserModel {
     
@@ -41,7 +41,7 @@ class UserModel {
                 fclose($file);
             }
         } else {
-            header('Location: index.php');
+            header('Location: ../index.php');
         }
     }
     
@@ -52,9 +52,9 @@ class UserModel {
      */
     public function inicioSesion($user, $pass) {        
         $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE username = ? and password = sha1(?)');
-        $stmt->bindParam(1, $user);
-        $stmt->bindParam(2, $pass);
-        $stmt->execute();
+        //$stmt->bindParam(1, $user);
+        //$stmt->bindParam(2, $pass);
+        $stmt->execute(array($user, $pass));
         
         if($stmt->rowCount() === 1) {
             return $stmt->fetch(PDO::FETCH_ASSOC);

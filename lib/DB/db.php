@@ -3,9 +3,8 @@
 class DB {
     private $pdo;
 
-
     public function __construct() {
-        require $_SERVER['DOCUMENT_ROOT'].'/Videoclub/lib/Config/config.php';
+        require $_SERVER['DOCUMENT_ROOT'].'/Videoclub-Online/lib/Config/config.php';
         
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $usuario, $pwd);
