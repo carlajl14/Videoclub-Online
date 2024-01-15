@@ -1,6 +1,6 @@
 <?php
 
-class Peliculas{
+class Peliculas {
     
     //Definición de los atributos
     private $id;
@@ -11,16 +11,16 @@ class Peliculas{
     private $cartel;
     
     //Constructor de la clase
-    public function __construct($id, $titulo, $genero, $pais, $anyo, $cartel) {
+    public function __construct($id, $titulo, $genero, $pais, $anyo) {
         $this->id = $id;
         $this->titulo = $titulo;
         $this->genero = $genero;
         $this->pais = $pais;
         $this->anyo = $anyo;
-        $this->cartel = $cartel;
+        //$this->cartel = $cartel;
     }
 
-    //Getters and setters
+        //Getters and setters
     public function getId() {
         return $this->id;
     }

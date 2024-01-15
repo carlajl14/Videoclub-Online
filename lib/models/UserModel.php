@@ -51,10 +51,10 @@ class UserModel {
      * @param type $pass
      */
     public function inicioSesion($user, $pass) {        
-        $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE username = ? and password = sha1(?)');
-        //$stmt->bindParam(1, $user);
-        //$stmt->bindParam(2, $pass);
-        $stmt->execute(array($user, $pass));
+        $stmt = $this->pdo->prepare('SELECT * FROM usuarios WHERE username = ? and password = sha2(?,256)');
+        $stmt->bindParam(1, $user);
+        $stmt->bindParam(2, $pass);
+        $stmt->execute();
         
         if($stmt->rowCount() === 1) {
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -76,5 +76,17 @@ class UserModel {
         foreach ($usuarios as $user) {
             $_SESSION['user'] = $user['username'];
         }
+    }
+    
+    /**
+     * Obtener todos los usuarios de la base de datos
+     * @return type
+     */
+    public function getUsers() {
+        $stmt = $this->pdo->prepare('SELECT * FROM usuarios');
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $users;
     }
 }

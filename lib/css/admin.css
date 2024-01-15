@@ -26,5 +26,107 @@ body {
 }
 
 .ima {
-    width: 80px;
+    width: 100px;
+}
+
+.modal__update{
+    position: absolute;
+    top: 30%;
+    width: 600px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 350px;
+    animation: moverUpdate 0.5s forwards;
+}
+
+@keyframes moverUpdate {
+    from{
+        transform: translateY(-1000px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+form {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+form > p {
+    text-align: center;
+    font-variant: small-caps;
+    font-size: 1.2rem;
+}
+
+label {
+    color: white;
+    margin-bottom: 10px;
+}
+
+input {
+    margin-bottom: 20px;
+}
+
+.modal__borrar{
+    position: absolute;
+    top: 50%;
+    width: 400px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 350px;
+    animation: moverDelete 0.5s forwards;
+}
+
+@keyframes moverDelete {
+    from{
+        transform: translateY(-800px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+.modal__insert{
+    display: none;
+    position: absolute;
+    top: 15%;
+    width: 600px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 475px;
+    animation: moverInsert 0.5s forwards;
+}
+
+@keyframes moverInsert {
+    from{
+        transform: translateY(-1000px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+.bajar {
+    animation: mover 0.5s forwards ease-in-out;
+}
+
+@keyframes mover {
+    from{
+        transform: translateY(0px);
+    }
+    to{
+        transform: translateY(500px);
+    }
 }

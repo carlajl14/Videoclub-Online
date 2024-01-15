@@ -5,7 +5,7 @@ require 'lib/models/UserModel.php';
 
 //Cookie para la última hora de conexión
 $fecha = date("d/m/Y | H:i:s");
-setcookie("fecha", $fecha, time() + 31536000);
+setcookie("fecha", $fecha, time() + 3600 * 24);
 
 //Objeto de la clase User
 $user = new UserModel();
@@ -13,10 +13,6 @@ $user = new UserModel();
 if (isset($_POST['inicio'])) {
     $usuario = $user->accesoInformacion();
     $users = $user->inicioSesion($_POST['username'], $_POST['password']);
-    //Comprobar si existe la cookie
-    if (isset($_COOKIE["fecha"])) {
-        echo "<p style='color:white'>Tú última visita fue el " . $_COOKIE["fecha"] . "</p>";
-    }
 }
 
 //Comprobar el rol de cada usuario
@@ -71,6 +67,13 @@ if (isset($users['rol'])) {
                     </form>
                 </div>
             </div>
+            <!-- Mostrar la última conexión -->
+            <?php
+            //Comprobar si existe la cookie
+            if (isset($_COOKIE["fecha"])) {
+                echo "<p style='color:white; margin-left: 10px'>Tú última visita fue el " . $_COOKIE["fecha"] . "</p>";
+            }
+            ?>
         </div>
     </body>
 </html>
